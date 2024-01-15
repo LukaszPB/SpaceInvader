@@ -1,14 +1,23 @@
 .title {
-    -fx-text-fill: white;
+    -fx-text-fill: #e6e6e6;
     -fx-font-family: "Impact";
     -fx-font-size: 50;
+    -fx-label-padding: 10;
+}
+.ship {
+    -fx-min-height: 60;
+    -fx-min-width: 60;
+    -fx-max-height: 60;
+    -fx-max-width: 60;
+    -fx-border-width: 0px; /* Grubość obramowania */
+    -fx-background-color: transparent; /* Kolor tła */
 }
 .menuButton {
     -fx-background-color: black; /* Kolor tła */
-    -fx-text-fill: white; /* Kolor tekstu */
+    -fx-text-fill: #e6e6e6; /* Kolor tekstu */
     -fx-font-size: 18px; /* Rozmiar czcionki */
     -fx-font-weight: bold; /* Pogrubienie tekstu */
-    -fx-border-color: white; /* Kolor obramowania */
+    -fx-border-color: #e6e6e6; /* Kolor obramowania */
     -fx-border-width: 5px; /* Grubość obramowania */
     -fx-max-height: 30px;
     -fx-max-width: 140px;

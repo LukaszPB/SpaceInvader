@@ -6,27 +6,33 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.projekt_ztp.Controllers.GameController"
-            stylesheets="@styleMenu.css" styleClass="background">
+            stylesheets="@styleMenu.css" styleClass="background" fx:id="borderPane">
     <top>
-        <Label text="SPACE  INVADERS" alignment="CENTER" BorderPane.alignment="CENTER" styleClass="title">
-            <padding>
-                <Insets top="25"/>
-            </padding>
-        </Label>
+        <Label fx:id="title" text="SPACE  INVADERS" alignment="CENTER" BorderPane.alignment="CENTER" styleClass="title"/>
     </top>
 
-    <center>
-        <AnchorPane fx:id="anchorPane">
+    <right>
+        <VBox><padding><Insets right="80"/> </padding></VBox>
+    </right>
 
+    <center>
+        <AnchorPane fx:id="anchorPane" styleClass="background">
+            <Button styleClass="ship" fx:id="ship" AnchorPane.bottomAnchor="10"/>
         </AnchorPane>
     </center>
 
+    <left>
+        <VBox><padding><Insets right="80"/> </padding></VBox>
+    </left>
+
     <bottom>
         <HBox alignment="CENTER" BorderPane.alignment="CENTER" spacing="20">
-            <Button styleClass="menuButton" text="Back" onAction="#backToMenu"/>
-            <padding><Insets bottom="25"/> </padding>
+            <Button styleClass="menuButton" text="Back" onAction="#backToMenu" focusTraversable="false"/>
+            <padding><Insets top="20" bottom="10"/> </padding>
         </HBox>
     </bottom>
 
