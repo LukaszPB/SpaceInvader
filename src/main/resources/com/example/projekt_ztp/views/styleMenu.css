@@ -10,7 +10,11 @@
     -fx-max-height: 60;
     -fx-max-width: 60;
     -fx-border-width: 0px; /* Grubość obramowania */
-    -fx-background-color: transparent; /* Kolor tła */
+    -fx-border-color: black;
+    -fx-background-color: black /* Kolor tła */
+}
+.bullet {
+    -fx-fill: #e6e6e6;
 }
 .menuButton {
     -fx-background-color: black; /* Kolor tła */

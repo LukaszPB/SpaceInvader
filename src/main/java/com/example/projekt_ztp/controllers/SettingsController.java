@@ -1,4 +1,4 @@
-package com.example.projekt_ztp.Controllers;
+package com.example.projekt_ztp.controllers;
 
 import com.example.projekt_ztp.Main;
 import com.example.projekt_ztp.StageProperties;

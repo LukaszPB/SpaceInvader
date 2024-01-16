@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.projekt_ztp.Controllers.GameController"
-            stylesheets="@styleMenu.css" styleClass="background" fx:id="borderPane">
+            fx:controller="com.example.projekt_ztp.controllers.GameController"
+            stylesheets="@styleMenu.css" styleClass="background">
     <top>
-        <Label fx:id="title" text="SPACE  INVADERS" alignment="CENTER" BorderPane.alignment="CENTER" styleClass="title"/>
+        <Label text="SPACE  INVADERS" alignment="CENTER" BorderPane.alignment="CENTER" styleClass="title"/>
     </top>
 
     <right>
@@ -21,7 +21,7 @@
 
     <center>
         <AnchorPane fx:id="anchorPane" styleClass="background">
-            <Button styleClass="ship" fx:id="ship" AnchorPane.bottomAnchor="10"/>
+            <Button styleClass="ship" fx:id="shipModel" AnchorPane.bottomAnchor="10"/>
         </AnchorPane>
     </center>
 

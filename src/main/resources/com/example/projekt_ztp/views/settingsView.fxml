@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.projekt_ztp.Controllers.SettingsController"
+            fx:controller="com.example.projekt_ztp.controllers.SettingsController"
             stylesheets="@styleMenu.css" styleClass="background" fx:id="borderPane">
     <top>
         <Label text="SPACE  INVADERS" alignment="CENTER" BorderPane.alignment="CENTER" styleClass="title">
