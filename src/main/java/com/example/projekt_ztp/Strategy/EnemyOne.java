@@ -8,8 +8,8 @@ public class EnemyOne extends Enemy{
         //Pozycjonowanie do zmiany
         this.xPos = 5;
         this.yPos = 5;
-        this.enemyWidth = 30;
-        this.enemyHeight = 30;
+        this.enemyWidth = 25;
+        this.enemyHeight = 25;
         initBorder();
     }
 
