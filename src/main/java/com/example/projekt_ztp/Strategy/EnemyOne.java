@@ -6,10 +6,10 @@ public class EnemyOne extends Enemy{
         this.health = 100;
         //this.image = TODO:WCZYTUJEMY ZDJECIE
         //Pozycjonowanie do zmiany
-        this.xPos = 100;
-        this.yPos = 100;
-        this.enemyWidth = 60;
-        this.enemyHeight = 60;
+        this.xPos = 5;
+        this.yPos = 5;
+        this.enemyWidth = 30;
+        this.enemyHeight = 30;
         initBorder();
     }
 
@@ -22,5 +22,7 @@ public class EnemyOne extends Enemy{
         this.enemyHeight = 60;
         initBorder();
     }
+
+
 
 }
