@@ -8,6 +8,6 @@ module com.example.projekt_ztp {
 
     opens com.example.projekt_ztp to javafx.fxml;
     exports com.example.projekt_ztp;
-    exports com.example.projekt_ztp.Controllers;
-    opens com.example.projekt_ztp.Controllers to javafx.fxml;
+    exports com.example.projekt_ztp.controllers;
+    opens com.example.projekt_ztp.controllers to javafx.fxml;
 }
