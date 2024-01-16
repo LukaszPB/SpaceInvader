@@ -20,6 +20,7 @@ public class Ship {
         x += upgrade.move(shift);
     }
     public Bullet shot() {
+        System.out.println(x+StageProperties.SHIP_SIZE/2 + "|" + 290);
         return upgrade.shot(new Bullet(x+StageProperties.SHIP_SIZE/2,StageProperties.GAME_WINDOW_HEIGHT-StageProperties.SHIP_SIZE));
     }
     public double getX() { return x; }

@@ -4,6 +4,9 @@ import com.example.projekt_ztp.Bullet;
 import com.example.projekt_ztp.Main;
 import com.example.projekt_ztp.Ship;
 import com.example.projekt_ztp.StageProperties;
+import com.example.projekt_ztp.Strategy.Enemy;
+import com.example.projekt_ztp.Strategy.EnemyOne;
+import com.example.projekt_ztp.Strategy.MoveRight;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -18,6 +21,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class GameController {
     @FXML
@@ -26,6 +30,8 @@ public class GameController {
     private Button shipModel;
     private Ship ship = Ship.getInstance();
     private ArrayList<Bullet> bullets = new ArrayList<>();
+    private LinkedList<Enemy> enemies = new LinkedList<>();
+
     @FXML
     private void initialize() {
         anchorPane.setPrefSize(StageProperties.GAME_WINDOW_WIDTH, StageProperties.GAME_WINDOW_HEIGHT);
@@ -47,9 +53,35 @@ public class GameController {
                     bullets.add(ship.shot());
                     anchorPane.getChildren().add(bullets.get(bullets.size() - 1).getGraphicRep());
                 }
+                case T -> {
+                    System.out.println("NEW ENEMY");
+                    Enemy enemyTmp = new EnemyOne();
+                    System.out.println(enemyTmp.getXandY());
+                    enemyTmp.setStrategy(new MoveRight());
+                    enemies.add(enemyTmp);
+                    anchorPane.getChildren().add(enemies.get(enemies.size()-1).getGraphicRep());
+                }
             }
             shipModel.setLayoutX(ship.getX());
         });
+
+        Timeline timelineEnemy = new Timeline(
+                new KeyFrame(Duration.millis(250), event -> {
+                    Iterator<Enemy> iterator = enemies.iterator();
+                    while (iterator.hasNext()) {
+                        Enemy enemy = iterator.next();
+                        System.out.println("EnemyIterator" + enemy.getXandY());
+                        if (enemy.move()) {
+                            System.out.println("enemyjest");
+                            enemy.reverseStrategy();
+                            //anchorPane.getChildren().remove(enemy.getGraphicRep());
+                            //iterator.remove();
+                        }
+                    }
+                })
+        );
+        timelineEnemy.setCycleCount(Timeline.INDEFINITE);
+        timelineEnemy.play();
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(50), event -> {
@@ -57,6 +89,7 @@ public class GameController {
                     while (iterator.hasNext()) {
                         Bullet bullet = iterator.next();
                         if (bullet.move()) {
+                            System.out.println("pociskjest");
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
                         }
