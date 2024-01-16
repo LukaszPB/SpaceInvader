@@ -8,9 +8,9 @@ import javafx.scene.shape.Rectangle;
 public abstract class Enemy {
 
     protected int health;
-    protected Image image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyOne.png");
+    protected Image image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyTwo.png");
     protected double xPos,yPos;
-    protected double enemyWidth = StageProperties.ENEMY_WIDTH - 30.0,enemyHeight = StageProperties.ENEMY_HEIGHT - 30.0;
+    protected double enemyWidth = StageProperties.ENEMY_WIDTH ,enemyHeight = StageProperties.ENEMY_HEIGHT ;
     protected Rectangle border;
     protected MoveStrategy moveStrategy;
     protected MoveLeft moveLeft = new MoveLeft();
@@ -18,6 +18,7 @@ public abstract class Enemy {
     protected ImagePattern imagePattern = new ImagePattern(image);
 
     public void reverseStrategy(){
+        yPos += 50;
         if(moveStrategy == moveLeft){
             moveStrategy = moveRight;
         }else{
@@ -34,15 +35,18 @@ public abstract class Enemy {
         border.setFill(imagePattern);
     }
 
-    public void move(MoveStrategy moveStrategy){
+    public boolean move(MoveStrategy moveStrategy){
         moveStrategy.move(this);
-        initBorder();
+        border.setLayoutX(xPos);
+        border.setLayoutY(yPos);
+        return xPos > 500 || xPos < 5.0;
     }
     public boolean move(){
         moveStrategy.move(this);
         System.out.println(xPos + "xpos");
         //xPos = xPos +5;
         border.setLayoutX(xPos);
+        border.setLayoutY(yPos);
         //initBorder(); NIE DAWAĆ INIT BORDER
         return xPos > 500.0 || xPos < 5.0;
     }

@@ -66,7 +66,7 @@ public class GameController {
         });
 
         Timeline timelineEnemy = new Timeline(
-                new KeyFrame(Duration.millis(250), event -> {
+                new KeyFrame(Duration.millis(100), event -> {
                     Iterator<Enemy> iterator = enemies.iterator();
                     while (iterator.hasNext()) {
                         Enemy enemy = iterator.next();
