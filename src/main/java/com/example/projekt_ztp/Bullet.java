@@ -3,8 +3,8 @@ package com.example.projekt_ztp;
 import javafx.scene.shape.Rectangle;
 
 public class Bullet {
-    private double size, speed, x, y;
-    private Rectangle graphicRep;
+    public double size, speed, x, y;
+    public Rectangle graphicRep;
     public Bullet(double x, double y) {
         size = 5;
         speed = 10;

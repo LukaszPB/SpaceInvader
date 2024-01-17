@@ -65,17 +65,15 @@ public class GameController {
             shipModel.setLayoutX(ship.getX());
         });
 
+
         Timeline timelineEnemy = new Timeline(
-                new KeyFrame(Duration.millis(100), event -> {
+                new KeyFrame(Duration.millis(50), event -> {
                     Iterator<Enemy> iterator = enemies.iterator();
                     while (iterator.hasNext()) {
                         Enemy enemy = iterator.next();
-                        System.out.println("EnemyIterator" + enemy.getXandY());
                         if (enemy.move()) {
                             System.out.println("enemyjest");
                             enemy.reverseStrategy();
-                            //anchorPane.getChildren().remove(enemy.getGraphicRep());
-                            //iterator.remove();
                         }
                     }
                 })
@@ -83,13 +81,36 @@ public class GameController {
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
         timelineEnemy.play();
 
+
+
+        Timeline collisionTimeline = new Timeline(
+                new KeyFrame(Duration.millis(25),event ->{
+                    Iterator<Enemy> enemyIterator = enemies.iterator();
+                    Iterator<Bullet> bulletIterator = bullets.iterator();
+                    while (enemyIterator.hasNext()){
+                        Enemy enemy = enemyIterator.next();
+                        while (bulletIterator.hasNext()){
+                            Bullet bullet = bulletIterator.next();
+                            if(bullet.getGraphicRep().getBoundsInParent().intersects(enemy.getGraphicRep().getBoundsInParent())){
+                                System.out.println("KOLIZJA!");
+                                anchorPane.getChildren().remove(enemy.getGraphicRep());
+                                enemyIterator.remove();
+                            }
+                        }
+
+                    }
+                })
+        );
+        collisionTimeline.setCycleCount(Timeline.INDEFINITE);
+        collisionTimeline.play();
+
+
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(50), event -> {
                     Iterator<Bullet> iterator = bullets.iterator();
                     while (iterator.hasNext()) {
                         Bullet bullet = iterator.next();
                         if (bullet.move()) {
-                            System.out.println("pociskjest");
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
                         }

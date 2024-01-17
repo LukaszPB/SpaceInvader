@@ -30,7 +30,9 @@ public abstract class Enemy {
     protected void loadClasses(){
     }
     public void initBorder() {
-        border = new Rectangle(xPos, yPos,enemyWidth,enemyHeight);
+        border = new Rectangle(xPos,yPos,enemyWidth,enemyHeight);
+        border.setLayoutX(xPos);
+        border.setLayoutY(yPos);
         //border.setFill(Color.BLUE);
         border.setFill(imagePattern);
     }
@@ -43,7 +45,7 @@ public abstract class Enemy {
     }
     public boolean move(){
         moveStrategy.move(this);
-        System.out.println(xPos + "xpos");
+        //System.out.println(xPos + "xpos");
         //xPos = xPos +5;
         border.setLayoutX(xPos);
         border.setLayoutY(yPos);
@@ -72,7 +74,7 @@ public abstract class Enemy {
     }
 
     public Rectangle getGraphicRep() {
-        initBorder();
+        //initBorder();
         return border;
     }
     public String getXandY(){
