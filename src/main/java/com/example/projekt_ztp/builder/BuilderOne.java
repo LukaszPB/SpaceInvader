@@ -21,18 +21,14 @@ public class BuilderOne implements BoardBuilder{
 
     @Override
     public void addEnemy1() {
-        Enemy enemy = new EnemyOne();
-        enemy.setXPos(x);
-        enemy.setYPos(y);
+        Enemy enemy = new EnemyOne(x,y);
         x += StageProperties.ENEMY_WIDTH;
         level.addEnemy(enemy);
     }
 
     @Override
     public void addEnemy2() {
-        Enemy enemy = new EnemyTwo();
-        enemy.setXPos(x);
-        enemy.setYPos(y);
+        Enemy enemy = new EnemyTwo(x,y);
         x += StageProperties.ENEMY_WIDTH;
         level.addEnemy(enemy);
     }
