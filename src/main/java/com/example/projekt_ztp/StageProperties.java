@@ -10,7 +10,7 @@ public class StageProperties {
     //Lukasz
     public static double GAME_WINDOW_WIDTH = 550;
     public static double GAME_WINDOW_HEIGHT = 350;
-    public static double SHIP_SIZE = 30;
+    public static double SHIP_SIZE = 40;
     public static double FRAME_SIZE = 10;
     public static String LEVELS_FILE_PATH = "src/main/resources/com/example/projekt_ztp/files/levels";
 }

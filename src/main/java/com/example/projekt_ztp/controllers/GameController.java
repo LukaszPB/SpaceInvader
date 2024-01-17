@@ -10,13 +10,12 @@ import com.example.projekt_ztp.Strategy.MoveRight;
 import com.example.projekt_ztp.builder.BuilderOne;
 import com.example.projekt_ztp.builder.Level;
 import com.example.projekt_ztp.builder.LevelsDataBase;
+import com.example.projekt_ztp.creator.Obstacle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -29,8 +28,6 @@ import java.util.LinkedList;
 public class GameController {
     @FXML
     private AnchorPane anchorPane;
-    @FXML
-    private Button shipModel;
     private Ship ship = Ship.getInstance();
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
@@ -42,14 +39,9 @@ public class GameController {
         anchorPane.setMinSize(StageProperties.GAME_WINDOW_WIDTH, StageProperties.GAME_WINDOW_HEIGHT);
         anchorPane.setMaxSize(StageProperties.GAME_WINDOW_WIDTH, StageProperties.GAME_WINDOW_HEIGHT);
 
-        Image shipImage = new Image("file:src/main/resources/com/example/projekt_ztp/Images/ship.png");
-        String shipStyle = "-fx-background-image: url('" + shipImage.getUrl() + "'); " +
-                "-fx-background-size: cover;";
+        anchorPane.getChildren().add(ship.getGraphicRep());
 
-        shipModel.setStyle(shipStyle);
-        shipModel.setLayoutX(ship.getX());
-
-        shipModel.setOnKeyPressed(event -> {
+        ship.getGraphicRep().setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case LEFT -> ship.move(-10);
                 case RIGHT -> ship.move(10);
@@ -66,9 +58,7 @@ public class GameController {
                     anchorPane.getChildren().add(enemies.get(enemies.size()-1).getGraphicRep());
                 }
             }
-            shipModel.setLayoutX(ship.getX());
         });
-
         Timeline timelineEnemy = new Timeline(
                 new KeyFrame(Duration.millis(100), event -> {
                     Iterator<Enemy> iterator = enemies.iterator();
@@ -86,6 +76,9 @@ public class GameController {
             enemy.setStrategy(new MoveRight());
             enemies.add(enemy);
             anchorPane.getChildren().add(enemy.getGraphicRep());
+        }
+        for(Obstacle obstacle : level.getObstacles()) {
+            anchorPane.getChildren().add(obstacle.getGraphicRep());
         }
 
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
@@ -114,8 +107,6 @@ public class GameController {
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
                         }
-
-
                     }
                 })
         );
