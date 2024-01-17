@@ -17,6 +17,7 @@ public class BuilderOne implements BoardBuilder{
         creator = new CreatorObstacleOne();
         x = 100;
         y = StageProperties.FRAME_SIZE;
+        //test1
     }
 
     @Override
