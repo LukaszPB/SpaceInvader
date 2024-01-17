@@ -7,6 +7,9 @@ import com.example.projekt_ztp.StageProperties;
 import com.example.projekt_ztp.Strategy.Enemy;
 import com.example.projekt_ztp.Strategy.EnemyOne;
 import com.example.projekt_ztp.Strategy.MoveRight;
+import com.example.projekt_ztp.builder.BuilderOne;
+import com.example.projekt_ztp.builder.Level;
+import com.example.projekt_ztp.builder.LevelsDataBase;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -31,6 +34,7 @@ public class GameController {
     private Ship ship = Ship.getInstance();
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+    private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
 
     @FXML
     private void initialize() {
@@ -65,55 +69,53 @@ public class GameController {
             shipModel.setLayoutX(ship.getX());
         });
 
-
         Timeline timelineEnemy = new Timeline(
-                new KeyFrame(Duration.millis(50), event -> {
+                new KeyFrame(Duration.millis(100), event -> {
                     Iterator<Enemy> iterator = enemies.iterator();
                     while (iterator.hasNext()) {
                         Enemy enemy = iterator.next();
                         if (enemy.move()) {
-                            System.out.println("enemyjest");
                             enemy.reverseStrategy();
                         }
                     }
                 })
         );
+
+        Level level = levelsDataBase.buildLevel(new BuilderOne(),levelsDataBase.getLevelDescriptions().get(0));
+        for(Enemy enemy : level.getEnemies()) {
+            enemy.setStrategy(new MoveRight());
+            enemies.add(enemy);
+            anchorPane.getChildren().add(enemy.getGraphicRep());
+        }
+
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
         timelineEnemy.play();
-
-
-
-        Timeline collisionTimeline = new Timeline(
-                new KeyFrame(Duration.millis(25),event ->{
-                    Iterator<Enemy> enemyIterator = enemies.iterator();
-                    Iterator<Bullet> bulletIterator = bullets.iterator();
-                    while (enemyIterator.hasNext()){
-                        Enemy enemy = enemyIterator.next();
-                        while (bulletIterator.hasNext()){
-                            Bullet bullet = bulletIterator.next();
-                            if(bullet.getGraphicRep().getBoundsInParent().intersects(enemy.getGraphicRep().getBoundsInParent())){
-                                System.out.println("KOLIZJA!");
-                                anchorPane.getChildren().remove(enemy.getGraphicRep());
-                                enemyIterator.remove();
-                            }
-                        }
-
-                    }
-                })
-        );
-        collisionTimeline.setCycleCount(Timeline.INDEFINITE);
-        collisionTimeline.play();
-
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(50), event -> {
                     Iterator<Bullet> iterator = bullets.iterator();
+                    Iterator<Enemy> enemyIterator = enemies.iterator();
                     while (iterator.hasNext()) {
                         Bullet bullet = iterator.next();
+                        while (enemyIterator.hasNext()){
+                            Enemy enemy = enemyIterator.next();
+                            if(enemy.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
+                                System.out.println("Kolizja!");
+                                anchorPane.getChildren().remove(enemy.getGraphicRep());
+                                enemyIterator.remove();
+                                anchorPane.getChildren().remove(bullet.getGraphicRep());
+                                iterator.remove();
+
+                            }
+                        }
+
+                        enemyIterator = enemies.iterator();
                         if (bullet.move()) {
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
                         }
+
+
                     }
                 })
         );
