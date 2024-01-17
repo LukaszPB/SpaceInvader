@@ -18,7 +18,7 @@ public abstract class Enemy {
     protected ImagePattern imagePattern = new ImagePattern(image);
 
     public void reverseStrategy(){
-        yPos += 50;
+        yPos += StageProperties.ENEMY_HEIGHT;
         if(moveStrategy == moveLeft){
             moveStrategy = moveRight;
         }else{
@@ -30,7 +30,9 @@ public abstract class Enemy {
     protected void loadClasses(){
     }
     public void initBorder() {
-        border = new Rectangle(xPos, yPos,enemyWidth,enemyHeight);
+        border = new Rectangle(StageProperties.ENEMY_WIDTH,StageProperties.ENEMY_HEIGHT);
+        border.setLayoutX(xPos);
+        border.setLayoutY(yPos);
         //border.setFill(Color.BLUE);
         border.setFill(imagePattern);
     }
@@ -39,16 +41,16 @@ public abstract class Enemy {
         moveStrategy.move(this);
         border.setLayoutX(xPos);
         border.setLayoutY(yPos);
-        return xPos > 500 || xPos < 5.0;
+        return xPos > 500 || xPos < 15.0;
     }
     public boolean move(){
         moveStrategy.move(this);
-        System.out.println(xPos + "xpos");
+        //System.out.println(xPos + "xpos");
         //xPos = xPos +5;
         border.setLayoutX(xPos);
         border.setLayoutY(yPos);
         //initBorder(); NIE DAWAĆ INIT BORDER
-        return xPos > 500.0 || xPos < 5.0;
+        return xPos > 500.0 || xPos <= 24.0;
     }
 
     public void setStrategy(MoveStrategy moveStrategy){
@@ -77,5 +79,13 @@ public abstract class Enemy {
     }
     public String getXandY(){
         return xPos + "|" + yPos;
+    }
+
+    public void setXPos(double xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setYPos(double yPos) {
+        this.yPos = yPos;
     }
 }
