@@ -37,6 +37,8 @@ public class BuilderOne implements BoardBuilder{
     public void addObstacle() {
         Obstacle obstacle = creator.create();
         obstacle.setX(x);
+        obstacle.setY(y);
+        x += StageProperties.ENEMY_WIDTH;
         level.addObstacle(obstacle);
     }
 

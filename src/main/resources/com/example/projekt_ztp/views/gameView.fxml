@@ -20,9 +20,7 @@
     </right>
 
     <center>
-        <AnchorPane fx:id="anchorPane" styleClass="background">
-            <Button styleClass="ship" fx:id="shipModel" AnchorPane.bottomAnchor="10"/>
-        </AnchorPane>
+        <AnchorPane fx:id="anchorPane" styleClass="background"/>
     </center>
 
     <left>
