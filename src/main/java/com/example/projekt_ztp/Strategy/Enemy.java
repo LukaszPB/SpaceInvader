@@ -74,7 +74,7 @@ public abstract class Enemy {
     }
 
     public Rectangle getGraphicRep() {
-        initBorder();
+        //initBorder();
         return border;
     }
     public String getXandY(){
