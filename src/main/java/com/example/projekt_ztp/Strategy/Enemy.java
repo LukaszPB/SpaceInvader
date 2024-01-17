@@ -50,7 +50,7 @@ public abstract class Enemy {
         border.setLayoutX(xPos);
         border.setLayoutY(yPos);
         //initBorder(); NIE DAWAĆ INIT BORDER
-        return xPos > 500.0 || xPos <= 24.0;
+        return xPos > 500.0 || xPos <= 15.0;
     }
 
     public void setStrategy(MoveStrategy moveStrategy){
