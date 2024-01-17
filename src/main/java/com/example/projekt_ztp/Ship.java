@@ -21,7 +21,7 @@ public class Ship {
     }
     public Bullet shot() {
         System.out.println(x+StageProperties.SHIP_SIZE/2 + "|" + 290);
-        return upgrade.shot(new Bullet(x+StageProperties.SHIP_SIZE/2,StageProperties.GAME_WINDOW_HEIGHT-StageProperties.SHIP_SIZE));
+        return upgrade.shot(new Bullet(x+StageProperties.SHIP_SIZE/2+12.5,StageProperties.GAME_WINDOW_HEIGHT-StageProperties.SHIP_SIZE-60));
     }
     public double getX() { return x; }
 }

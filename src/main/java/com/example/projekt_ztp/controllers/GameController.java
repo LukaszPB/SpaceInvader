@@ -7,6 +7,9 @@ import com.example.projekt_ztp.StageProperties;
 import com.example.projekt_ztp.Strategy.Enemy;
 import com.example.projekt_ztp.Strategy.EnemyOne;
 import com.example.projekt_ztp.Strategy.MoveRight;
+import com.example.projekt_ztp.builder.BuilderOne;
+import com.example.projekt_ztp.builder.Level;
+import com.example.projekt_ztp.builder.LevelsDataBase;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -31,6 +34,7 @@ public class GameController {
     private Ship ship = Ship.getInstance();
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+    private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
 
     @FXML
     private void initialize() {
@@ -70,9 +74,9 @@ public class GameController {
                     Iterator<Enemy> iterator = enemies.iterator();
                     while (iterator.hasNext()) {
                         Enemy enemy = iterator.next();
-                        System.out.println("EnemyIterator" + enemy.getXandY());
+                        //System.out.println("EnemyIterator" + enemy.getXandY());
                         if (enemy.move()) {
-                            System.out.println("enemyjest");
+                            //System.out.println("enemyjest");
                             enemy.reverseStrategy();
                             //anchorPane.getChildren().remove(enemy.getGraphicRep());
                             //iterator.remove();
@@ -80,6 +84,14 @@ public class GameController {
                     }
                 })
         );
+
+        Level level = levelsDataBase.buildLevel(new BuilderOne(),levelsDataBase.getLevelDescriptions().get(0));
+        for(Enemy enemy : level.getEnemies()) {
+            enemy.setStrategy(new MoveRight());
+            enemies.add(enemy);
+            anchorPane.getChildren().add(enemy.getGraphicRep());
+        }
+
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
         timelineEnemy.play();
 
