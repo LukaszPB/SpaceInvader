@@ -1,5 +1,6 @@
 package com.example.projekt_ztp.Strategy;
 
+import com.example.projekt_ztp.Bullet;
 import com.example.projekt_ztp.StageProperties;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -57,15 +58,19 @@ public abstract class Enemy {
         this.moveStrategy = moveStrategy;
     }
 
-    protected void shoot(){
+    public Bullet shoot(){
         //STRZELANIE DO GRACZA
         System.out.println("Strzelam!");
+        Bullet bullet = new Bullet(xPos,yPos);
+        bullet.changeDirectionOfBullet();
+        return bullet;
     }
 
-    protected boolean isPlayerInRange(){
+    public boolean isPlayerInRange(){
         //SPRAWDZANIE CZY MOZNA STRZELIC DO GRACZA
-        return false;
+        return moveStrategy == moveLeft;
     }
+
 
     public void update(){
         if(isPlayerInRange()){

@@ -15,6 +15,9 @@ public class Bullet {
         graphicRep.setLayoutY(y);
         graphicRep.getStyleClass().add("bullet");
     }
+    public void changeDirectionOfBullet(){
+        speed = -1;
+    }
 
     public double getSize() {
         return size;
@@ -38,7 +41,9 @@ public class Bullet {
     public boolean move() {
         y -= speed;
         graphicRep.setLayoutY(y);
-
-        return y<=10;
+        if(y<=10){return true;}
+        //if(y<=300){return true;}
+        return false;
+        //return y<=10;
     }
 }

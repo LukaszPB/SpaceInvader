@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -28,7 +27,8 @@ public class GameController {
     @FXML
     private AnchorPane anchorPane;
     private Ship ship = Ship.getInstance();
-    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private LinkedList<Bullet> playerBullets = new LinkedList<>();
+    private LinkedList<Bullet> enemyBullets = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Obstacle> obstacles = new LinkedList<>();
     private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
@@ -50,8 +50,8 @@ public class GameController {
                 case LEFT -> ship.move(-10);
                 case RIGHT -> ship.move(10);
                 case SPACE -> {
-                    bullets.add(ship.shot());
-                    anchorPane.getChildren().add(bullets.get(bullets.size() - 1).getGraphicRep());
+                    playerBullets.add(ship.shot());
+                    anchorPane.getChildren().add(playerBullets.get(playerBullets.size() - 1).getGraphicRep());
                 }
                 case T -> {
                     System.out.println("NEW ENEMY");
@@ -68,10 +68,15 @@ public class GameController {
                     Iterator<Enemy> iterator = enemies.iterator();
                     Iterator<Enemy> iteratorTmp = enemies.iterator();
 
+
                     while (iterator.hasNext()) {
                         Enemy enemy = iterator.next();
+                        //TODO:PRZECIWNIK STRZELANIE
+//                        if(enemy.isPlayerInRange()){
+//                            enemyBullets.add(enemy.shoot());
+//                            anchorPane.getChildren().add(enemyBullets.get(enemyBullets.size() -1).graphicRep);
+//
                         if (enemy.move()) {
-
                             while (iteratorTmp.hasNext()){
                                 Enemy enemy1 = iteratorTmp.next();
                                 enemy1.reverseStrategy();
@@ -79,6 +84,18 @@ public class GameController {
 
                         }
                     }
+                    //NOWE NIE DZIALA XD
+//                    Iterator<Bullet> bulletIterator = enemyBullets.iterator();
+//                    while (bulletIterator.hasNext()){
+//                        Bullet enemyBullet = bulletIterator.next();
+//
+//                        if (enemyBullet.move()) {
+//                            anchorPane.getChildren().remove(enemyBullet.getGraphicRep());
+//                            bulletIterator.remove();
+//                        }
+//
+//                    }
+
                 })
         );
 
@@ -90,7 +107,7 @@ public class GameController {
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
-                    Iterator<Bullet> iterator = bullets.iterator();
+                    Iterator<Bullet> iterator = playerBullets.iterator();
                     Iterator<Enemy> enemyIterator = enemies.iterator();
                     Iterator<Obstacle> obstacleIterator = obstacles.iterator();
 
