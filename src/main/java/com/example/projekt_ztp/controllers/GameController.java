@@ -76,16 +76,6 @@ public class GameController {
         );
 
 
-        Level level = levelsDataBase.buildLevel(new BuilderOne(),levelsDataBase.getLevelDescriptions().get(0));
-        for(Enemy enemy : level.getEnemies()) {
-            enemy.setStrategy(new MoveRight());
-            enemies.add(enemy);
-            anchorPane.getChildren().add(enemy.getGraphicRep());
-        }
-        for(Obstacle obstacle : level.getObstacles()) {
-            obstacles.add(obstacle);
-            anchorPane.getChildren().add(obstacle.getGraphicRep());
-        }
 
 
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
@@ -166,6 +156,7 @@ public class GameController {
             anchorPane.getChildren().add(enemy.getGraphicRep());
         }
         for(Obstacle obstacle : level.getObstacles()) {
+            obstacles.add(obstacle);
             anchorPane.getChildren().add(obstacle.getGraphicRep());
         }
     }
