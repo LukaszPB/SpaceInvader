@@ -7,7 +7,7 @@ public class Bullet {
     public Rectangle graphicRep;
     public Bullet(double x, double y) {
         size = 5;
-        speed = 10;
+        speed = 1;
         this.x = x;
         this.y = y;
         graphicRep = new Rectangle(size,size);
