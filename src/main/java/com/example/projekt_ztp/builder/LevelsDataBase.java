@@ -1,25 +1,35 @@
 package com.example.projekt_ztp.builder;
 
+import com.example.projekt_ztp.StageProperties;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class LevelsDataBase {
     private ArrayList<String> levelDescriptions = new ArrayList<>();
+    private BoardBuilder[] builders = {new BuilderOne(),new BuilderTwo()};
+    private int difficulty=1, theme=0;
     public LevelsDataBase(String path) {
         try {
-            Scanner scanner = new Scanner(new File(path));
-            while (scanner.hasNext()) {
-                levelDescriptions.add(scanner.next());
+            Scanner scannerLevels = new Scanner(new File(path));
+            while (scannerLevels.hasNext()) {
+                levelDescriptions.add(scannerLevels.next());
             }
-            scanner.close();
+            scannerLevels.close();
+
+            Scanner scannerSettings = new Scanner(new File(StageProperties.SETTINGS_FILE_PATH));
+            difficulty = Integer.parseInt(scannerSettings.next());
+            theme = Integer.parseInt(scannerSettings.next());
+            scannerSettings.close();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public Level buildLevel(BoardBuilder builder, String description) {
+    private Level buildLevel(BoardBuilder builder, String description) {
         String[] rows = description.split(";");
         for(String row : rows) {
             for(char character : row.toCharArray()) {
@@ -34,8 +44,18 @@ public class LevelsDataBase {
         }
         return builder.getLevel();
     }
-
-    public ArrayList<String> getLevelDescriptions() {
-        return levelDescriptions;
+    public Iterator<Level> iterator() {
+        return new LevelIterator();
+    }
+    private class LevelIterator implements java.util.Iterator<Level> {
+        private int idx=-1;
+        public Level next() {
+            idx+=difficulty;
+            return buildLevel(new BuilderOne(),levelDescriptions.get(idx));
+        }
+        @Override
+        public boolean hasNext() {
+            return idx+difficulty<levelDescriptions.size();
+        }
     }
 }

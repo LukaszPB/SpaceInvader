@@ -4,6 +4,11 @@
     -fx-font-size: 50;
     -fx-label-padding: 10;
 }
+.message {
+    -fx-text-fill: #e6e6e6;
+    -fx-font-family: "Impact";
+    -fx-font-size: 30;
+}
 .ship {
     -fx-min-height: 60;
     -fx-min-width: 60;

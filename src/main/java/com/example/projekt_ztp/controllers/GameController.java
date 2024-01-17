@@ -7,7 +7,6 @@ import com.example.projekt_ztp.StageProperties;
 import com.example.projekt_ztp.Strategy.Enemy;
 import com.example.projekt_ztp.Strategy.EnemyOne;
 import com.example.projekt_ztp.Strategy.MoveRight;
-import com.example.projekt_ztp.builder.BuilderOne;
 import com.example.projekt_ztp.builder.Level;
 import com.example.projekt_ztp.builder.LevelsDataBase;
 import com.example.projekt_ztp.creator.Obstacle;
@@ -33,6 +32,7 @@ public class GameController {
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Obstacle> obstacles = new LinkedList<>();
     private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
+    private Iterator<Level> levelIterator;
 
     @FXML
     private void initialize() {
@@ -41,6 +41,9 @@ public class GameController {
         anchorPane.setMaxSize(StageProperties.GAME_WINDOW_WIDTH, StageProperties.GAME_WINDOW_HEIGHT);
 
         anchorPane.getChildren().add(ship.getGraphicRep());
+
+        levelIterator = levelsDataBase.iterator();
+        loadLevel();
 
         ship.getGraphicRep().setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -72,6 +75,7 @@ public class GameController {
                 })
         );
 
+
         Level level = levelsDataBase.buildLevel(new BuilderOne(),levelsDataBase.getLevelDescriptions().get(0));
         for(Enemy enemy : level.getEnemies()) {
             enemy.setStrategy(new MoveRight());
@@ -82,6 +86,7 @@ public class GameController {
             obstacles.add(obstacle);
             anchorPane.getChildren().add(obstacle.getGraphicRep());
         }
+
 
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
         timelineEnemy.play();
@@ -146,7 +151,24 @@ public class GameController {
         timeline.play();
     }
 
+    private void loadLevel() {
+        enemies.clear();
 
+        if(!levelIterator.hasNext()) {
+
+            return;
+        }
+        Level level = levelIterator.next();
+
+        for(Enemy enemy : level.getEnemies()) {
+            enemy.setStrategy(new MoveRight());
+            enemies.add(enemy);
+            anchorPane.getChildren().add(enemy.getGraphicRep());
+        }
+        for(Obstacle obstacle : level.getObstacles()) {
+            anchorPane.getChildren().add(obstacle.getGraphicRep());
+        }
+    }
 
     @FXML
     private void backToMenu() throws IOException {
