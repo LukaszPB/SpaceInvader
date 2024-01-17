@@ -15,8 +15,9 @@ public class BuilderOne implements BoardBuilder{
     public BuilderOne() {
         level = new Level();
         creator = new CreatorObstacleOne();
-        x = 15;
+        x = 100;
         y = StageProperties.FRAME_SIZE;
+        //test1
     }
 
     @Override
@@ -50,7 +51,7 @@ public class BuilderOne implements BoardBuilder{
     @Override
     public void nexLine() {
         y += StageProperties.ENEMY_HEIGHT;
-        x = 15;
+        x = 120;
     }
 
     @Override

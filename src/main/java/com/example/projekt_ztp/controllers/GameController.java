@@ -30,6 +30,7 @@ public class GameController {
     private Ship ship = Ship.getInstance();
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+    private LinkedList<Obstacle> obstacles = new LinkedList<>();
     private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
     private Iterator<Level> levelIterator;
 
@@ -74,6 +75,19 @@ public class GameController {
                 })
         );
 
+
+        Level level = levelsDataBase.buildLevel(new BuilderOne(),levelsDataBase.getLevelDescriptions().get(0));
+        for(Enemy enemy : level.getEnemies()) {
+            enemy.setStrategy(new MoveRight());
+            enemies.add(enemy);
+            anchorPane.getChildren().add(enemy.getGraphicRep());
+        }
+        for(Obstacle obstacle : level.getObstacles()) {
+            obstacles.add(obstacle);
+            anchorPane.getChildren().add(obstacle.getGraphicRep());
+        }
+
+
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
         timelineEnemy.play();
 
@@ -81,8 +95,37 @@ public class GameController {
                 new KeyFrame(Duration.millis(50), event -> {
                     Iterator<Bullet> iterator = bullets.iterator();
                     Iterator<Enemy> enemyIterator = enemies.iterator();
+                    Iterator<Obstacle> obstacleIterator = obstacles.iterator();
+
+
+                    while (obstacleIterator.hasNext()){
+                        Obstacle obstacle = obstacleIterator.next();
+                        //WERYFIKACJA KONCA ZYCIA
+                        if(obstacle.getObstacleHealth() <= 1){
+                            anchorPane.getChildren().remove(obstacle.getGraphicRep());
+                            obstacleIterator.remove();
+                            System.out.println("kill1");
+                        }
+                    }
+                    obstacleIterator = obstacles.iterator();
+
+
                     while (iterator.hasNext()) {
                         Bullet bullet = iterator.next();
+
+                        while (obstacleIterator.hasNext()){
+                            //WERYFIKACJA UDEZENIA W SCIANE
+                            Obstacle obstacle = obstacleIterator.next();
+                            if(obstacle.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
+                                System.out.println("SCIANA!");
+                                obstacle.getShot();
+                                anchorPane.getChildren().remove(bullet.getGraphicRep());
+                                iterator.remove();
+                            }
+                        }
+                        obstacleIterator = obstacles.iterator();
+
+
                         while (enemyIterator.hasNext()){
                             Enemy enemy = enemyIterator.next();
                             if(enemy.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
@@ -91,11 +134,10 @@ public class GameController {
                                 enemyIterator.remove();
                                 anchorPane.getChildren().remove(bullet.getGraphicRep());
                                 iterator.remove();
-
                             }
                         }
-
                         enemyIterator = enemies.iterator();
+
                         if (bullet.move()) {
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
@@ -104,9 +146,11 @@ public class GameController {
                 })
         );
 
+
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
     private void loadLevel() {
         enemies.clear();
 
@@ -125,6 +169,7 @@ public class GameController {
             anchorPane.getChildren().add(obstacle.getGraphicRep());
         }
     }
+
     @FXML
     private void backToMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Views/menuView.fxml"));
