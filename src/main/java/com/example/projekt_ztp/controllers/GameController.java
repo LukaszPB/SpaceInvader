@@ -74,12 +74,8 @@ public class GameController {
                     Iterator<Enemy> iterator = enemies.iterator();
                     while (iterator.hasNext()) {
                         Enemy enemy = iterator.next();
-                        //System.out.println("EnemyIterator" + enemy.getXandY());
                         if (enemy.move()) {
-                            //System.out.println("enemyjest");
                             enemy.reverseStrategy();
-                            //anchorPane.getChildren().remove(enemy.getGraphicRep());
-                            //iterator.remove();
                         }
                     }
                 })
@@ -98,15 +94,33 @@ public class GameController {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(50), event -> {
                     Iterator<Bullet> iterator = bullets.iterator();
+                    Iterator<Enemy> enemyIterator = enemies.iterator();
                     while (iterator.hasNext()) {
                         Bullet bullet = iterator.next();
+                        while (enemyIterator.hasNext()){
+                            Enemy enemy = enemyIterator.next();
+                            if(enemy.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
+                                System.out.println("Kolizja!");
+                            }
+                        }
+                        enemyIterator = enemies.iterator();
                         if (bullet.move()) {
-                            System.out.println("pociskjest");
+                            //System.out.println("pociskjest");
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
                         }
                     }
                 })
+//                ,
+//                new KeyFrame(Duration.millis(100), event -> {
+//                    Iterator<Enemy> iterator = enemies.iterator();
+//                    while (iterator.hasNext()) {
+//                        Enemy enemy = iterator.next();
+//                        if (enemy.move()) {
+//                            enemy.reverseStrategy();
+//                        }
+//                    }
+//                })
         );
 
         timeline.setCycleCount(Timeline.INDEFINITE);
