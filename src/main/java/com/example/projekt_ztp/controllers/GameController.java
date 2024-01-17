@@ -31,6 +31,7 @@ public class GameController {
     private Ship ship = Ship.getInstance();
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+    private LinkedList<Obstacle> obstacles = new LinkedList<>();
     private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
 
     @FXML
@@ -78,6 +79,7 @@ public class GameController {
             anchorPane.getChildren().add(enemy.getGraphicRep());
         }
         for(Obstacle obstacle : level.getObstacles()) {
+            obstacles.add(obstacle);
             anchorPane.getChildren().add(obstacle.getGraphicRep());
         }
 
@@ -88,8 +90,37 @@ public class GameController {
                 new KeyFrame(Duration.millis(50), event -> {
                     Iterator<Bullet> iterator = bullets.iterator();
                     Iterator<Enemy> enemyIterator = enemies.iterator();
+                    Iterator<Obstacle> obstacleIterator = obstacles.iterator();
+
+
+                    while (obstacleIterator.hasNext()){
+                        Obstacle obstacle = obstacleIterator.next();
+                        //WERYFIKACJA KONCA ZYCIA
+                        if(obstacle.getObstacleHealth() <= 1){
+                            anchorPane.getChildren().remove(obstacle.getGraphicRep());
+                            obstacleIterator.remove();
+                            System.out.println("kill1");
+                        }
+                    }
+                    obstacleIterator = obstacles.iterator();
+
+
                     while (iterator.hasNext()) {
                         Bullet bullet = iterator.next();
+
+                        while (obstacleIterator.hasNext()){
+                            //WERYFIKACJA UDEZENIA W SCIANE
+                            Obstacle obstacle = obstacleIterator.next();
+                            if(obstacle.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
+                                System.out.println("SCIANA!");
+                                obstacle.getShot();
+                                anchorPane.getChildren().remove(bullet.getGraphicRep());
+                                iterator.remove();
+                            }
+                        }
+                        obstacleIterator = obstacles.iterator();
+
+
                         while (enemyIterator.hasNext()){
                             Enemy enemy = enemyIterator.next();
                             if(enemy.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
@@ -98,11 +129,10 @@ public class GameController {
                                 enemyIterator.remove();
                                 anchorPane.getChildren().remove(bullet.getGraphicRep());
                                 iterator.remove();
-
                             }
                         }
-
                         enemyIterator = enemies.iterator();
+
                         if (bullet.move()) {
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
@@ -111,9 +141,13 @@ public class GameController {
                 })
         );
 
+
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
+
+
     @FXML
     private void backToMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Views/menuView.fxml"));
