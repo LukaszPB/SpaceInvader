@@ -101,26 +101,23 @@ public class GameController {
                             Enemy enemy = enemyIterator.next();
                             if(enemy.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
                                 System.out.println("Kolizja!");
+                                anchorPane.getChildren().remove(enemy.getGraphicRep());
+                                enemyIterator.remove();
+                                anchorPane.getChildren().remove(bullet.getGraphicRep());
+                                iterator.remove();
+
                             }
                         }
+
                         enemyIterator = enemies.iterator();
                         if (bullet.move()) {
-                            //System.out.println("pociskjest");
                             anchorPane.getChildren().remove(bullet.getGraphicRep());
                             iterator.remove();
                         }
+
+
                     }
                 })
-//                ,
-//                new KeyFrame(Duration.millis(100), event -> {
-//                    Iterator<Enemy> iterator = enemies.iterator();
-//                    while (iterator.hasNext()) {
-//                        Enemy enemy = iterator.next();
-//                        if (enemy.move()) {
-//                            enemy.reverseStrategy();
-//                        }
-//                    }
-//                })
         );
 
         timeline.setCycleCount(Timeline.INDEFINITE);
