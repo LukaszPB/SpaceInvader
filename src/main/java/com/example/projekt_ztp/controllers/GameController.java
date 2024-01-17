@@ -64,12 +64,19 @@ public class GameController {
             }
         });
         Timeline timelineEnemy = new Timeline(
-                new KeyFrame(Duration.millis(100), event -> {
+                new KeyFrame(Duration.millis(10), event -> {
                     Iterator<Enemy> iterator = enemies.iterator();
+                    Iterator<Enemy> iteratorTmp = enemies.iterator();
+
                     while (iterator.hasNext()) {
                         Enemy enemy = iterator.next();
                         if (enemy.move()) {
-                            enemy.reverseStrategy();
+
+                            while (iteratorTmp.hasNext()){
+                                Enemy enemy1 = iteratorTmp.next();
+                                enemy1.reverseStrategy();
+                            }
+
                         }
                     }
                 })
@@ -82,7 +89,7 @@ public class GameController {
         timelineEnemy.play();
 
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.millis(50), event -> {
+                new KeyFrame(Duration.millis(10), event -> {
                     Iterator<Bullet> iterator = bullets.iterator();
                     Iterator<Enemy> enemyIterator = enemies.iterator();
                     Iterator<Obstacle> obstacleIterator = obstacles.iterator();
