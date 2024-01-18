@@ -39,6 +39,6 @@ public class Bullet {
         y -= speed;
         graphicRep.setLayoutY(y);
 
-        return y<=10;
+        return y <= 10;
     }
 }

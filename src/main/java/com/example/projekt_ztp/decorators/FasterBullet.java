@@ -1,10 +1,12 @@
 package com.example.projekt_ztp.decorators;
 
 import com.example.projekt_ztp.Bullet;
+import javafx.scene.paint.Color;
 
 public class FasterBullet extends Module{
     public FasterBullet(Upgrade upgrade) {
         super(upgrade);
+        graphicRep = Color.RED;
     }
 
     @Override

@@ -38,7 +38,7 @@ public class BuilderOne implements BoardBuilder{
     public void addObstacle() {
         Obstacle obstacle = creator.create();
         obstacle.setX(x);
-        obstacle.setY(y);
+        obstacle.setY(StageProperties.GAME_WINDOW_HEIGHT-2.5*StageProperties.SHIP_SIZE);
         x += StageProperties.ENEMY_WIDTH;
         level.addObstacle(obstacle);
     }
@@ -51,7 +51,7 @@ public class BuilderOne implements BoardBuilder{
     @Override
     public void nexLine() {
         y += StageProperties.ENEMY_HEIGHT;
-        x = 120;
+        x = 100;
     }
 
     @Override

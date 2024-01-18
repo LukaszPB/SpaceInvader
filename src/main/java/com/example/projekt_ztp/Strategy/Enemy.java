@@ -87,4 +87,12 @@ public abstract class Enemy {
     public void setYPos(double yPos) {
         this.yPos = yPos;
     }
+
+    public double getxPos() {
+        return xPos;
+    }
+
+    public double getyPos() {
+        return yPos;
+    }
 }
