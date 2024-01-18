@@ -1,6 +1,7 @@
 package com.example.projekt_ztp.state;
 
 import com.example.projekt_ztp.Bullet;
+import com.example.projekt_ztp.StageProperties;
 import com.example.projekt_ztp.Strategy.Enemy;
 import com.example.projekt_ztp.Strategy.EnemyOne;
 import com.example.projekt_ztp.Strategy.MoveRight;
@@ -30,6 +31,7 @@ public class GameState extends AppState{
             obstacles.add(obstacle);
             pane.getChildren().add(obstacle.getGraphicRep());
         }
+        ship.setupStartingPosition();
     }
     @Override
     public void setupShipMove() {
@@ -54,7 +56,7 @@ public class GameState extends AppState{
     }
 
     @Override
-    public void enemyMove() {
+    public int enemyMove() {
         Iterator<Enemy> iterator = enemies.iterator();
         Iterator<Enemy> iteratorTmp = enemies.iterator();
 
@@ -69,6 +71,7 @@ public class GameState extends AppState{
 
             }
         }
+        return hasGameEnded();
     }
 
     @Override
@@ -122,6 +125,32 @@ public class GameState extends AppState{
                 pane.getChildren().remove(bullet.getGraphicRep());
                 iterator.remove();
             }
+        }
+    }
+    private int hasGameEnded() {
+        if(enemies.size() == 0) {
+            deleteAll();
+            ship.setupStartingPosition();
+            return 2;
+        }
+        for(Enemy enemy : enemies) {
+            if(enemy.getyPos() >= StageProperties.GAME_WINDOW_HEIGHT-2.5*StageProperties.SHIP_SIZE) {
+                deleteAll();
+                ship.setupStartingPosition();
+                return 1;
+            }
+        }
+        return 0;
+    }
+    public void deleteAll() {
+        for(Bullet bullet : bullets) {
+            pane.getChildren().remove(bullet.getGraphicRep());
+        }
+        for(Enemy enemy : enemies) {
+            pane.getChildren().remove(enemy.getGraphicRep());
+        }
+        for(Obstacle obstacle : obstacles) {
+            pane.getChildren().remove(obstacle.getGraphicRep());
         }
     }
 }

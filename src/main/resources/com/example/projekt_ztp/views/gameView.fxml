@@ -20,7 +20,9 @@
     </right>
 
     <center>
-        <AnchorPane fx:id="anchorPane" styleClass="background"/>
+        <AnchorPane fx:id="anchorPane" styleClass="background">
+            <Label fx:id="message" styleClass="message"/>
+        </AnchorPane>
     </center>
 
     <left>
@@ -29,7 +31,9 @@
 
     <bottom>
         <HBox alignment="CENTER" BorderPane.alignment="CENTER" spacing="20">
-            <Button styleClass="menuButton" text="Pause" onAction="#pause" focusTraversable="false"/>
+            <Button styleClass="menuButton" text="Pause" onAction="#pause" focusTraversable="false"
+                    minWidth="120" fx:id="pause"/>
+            <Button styleClass="menuButton" text="Restart" onAction="#restart" focusTraversable="false"/>
             <Button styleClass="menuButton" text="Back" onAction="#backToMenu" focusTraversable="false"/>
             <padding><Insets top="20" bottom="10"/> </padding>
         </HBox>

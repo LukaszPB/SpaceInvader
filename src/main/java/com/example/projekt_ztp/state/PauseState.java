@@ -14,8 +14,8 @@ public class PauseState extends AppState{
     }
 
     @Override
-    public void enemyMove() {
-
+    public int enemyMove() {
+        return 0;
     }
 
     @Override

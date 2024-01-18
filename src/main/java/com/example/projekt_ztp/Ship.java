@@ -1,7 +1,7 @@
 package com.example.projekt_ztp;
 
 import com.example.projekt_ztp.decorators.BasicModule;
-import com.example.projekt_ztp.decorators.StrongerEngines;
+import com.example.projekt_ztp.decorators.Module;
 import com.example.projekt_ztp.decorators.Upgrade;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -27,8 +27,15 @@ public class Ship {
         graphicRep.setLayoutY(y);
     }
     public static Ship getInstance() { return instance; }
-    public void addUpgrade(Upgrade upgrade) {
-        this.upgrade = new StrongerEngines(this.upgrade);
+    public void addUpgrade(Module module) {
+        module.setUpgrade(upgrade);
+        upgrade = module;
+    }
+    public void setupStartingPosition() {
+        x=(StageProperties.GAME_WINDOW_WIDTH-StageProperties.SHIP_SIZE)/2;
+        y=StageProperties.GAME_WINDOW_HEIGHT-1.5*StageProperties.SHIP_SIZE;
+        graphicRep.setLayoutX(x);
+        graphicRep.setLayoutY(y);
     }
     public void move(int shift) {
         if(x+shift < 10 || x+shift > StageProperties.GAME_WINDOW_WIDTH-StageProperties.SHIP_SIZE-10) {

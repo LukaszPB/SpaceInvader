@@ -11,6 +11,6 @@ public abstract class AppState {
         setupShipMove();
     }
     protected abstract void setupShipMove();
-    public abstract void enemyMove();
+    public abstract int enemyMove();
     public abstract void bulletsMove();
 }
