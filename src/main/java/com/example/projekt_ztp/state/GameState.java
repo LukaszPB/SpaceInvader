@@ -1,7 +1,6 @@
 package com.example.projekt_ztp.state;
 
 import com.example.projekt_ztp.Bullet;
-import com.example.projekt_ztp.Ship;
 import com.example.projekt_ztp.Strategy.Enemy;
 import com.example.projekt_ztp.Strategy.EnemyOne;
 import com.example.projekt_ztp.Strategy.MoveRight;
@@ -17,10 +16,8 @@ public class GameState extends AppState{
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Obstacle> obstacles = new LinkedList<>();
-    private Ship ship = Ship.getInstance();
     public GameState(Pane pane) {
         super(pane);
-        setupShipMove();
     }
     public GameState(Pane pane, Level level) {
         this(pane);
@@ -35,7 +32,7 @@ public class GameState extends AppState{
         }
     }
     @Override
-    protected void setupShipMove() {
+    public void setupShipMove() {
         ship.getGraphicRep().setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case LEFT -> ship.move(-10);

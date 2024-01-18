@@ -35,6 +35,7 @@ public class GameController {
     private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
     private Iterator<Level> levelIterator;
     private boolean isGamePaused = false;
+    private GameState gameState;
     private AppState currentState = new PauseState(anchorPane);
 
     @FXML
@@ -74,12 +75,19 @@ public class GameController {
 
     private void loadLevel() {
         if(levelIterator.hasNext()) {
-            currentState = new GameState(anchorPane,levelIterator.next());
+            gameState = new GameState(anchorPane,levelIterator.next());
+            currentState = gameState;
         }
     }
     @FXML
     private void pause() {
-        isGamePaused = !isGamePaused;
+        if(currentState instanceof PauseState) {
+            gameState.setupShipMove();
+            currentState = gameState;
+        }
+        else {
+            currentState = new PauseState(anchorPane);
+        }
     }
     @FXML
     private void backToMenu() throws IOException {

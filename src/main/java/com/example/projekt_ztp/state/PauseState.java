@@ -9,7 +9,8 @@ public class PauseState extends AppState{
 
     @Override
     protected void setupShipMove() {
-
+        ship.getGraphicRep().setOnKeyPressed(event -> {
+        });
     }
 
     @Override
