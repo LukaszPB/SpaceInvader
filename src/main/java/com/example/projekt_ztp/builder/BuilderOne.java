@@ -51,7 +51,7 @@ public class BuilderOne implements BoardBuilder{
     @Override
     public void nexLine() {
         y += StageProperties.ENEMY_HEIGHT;
-        x = 120;
+        x = 100;
     }
 
     @Override

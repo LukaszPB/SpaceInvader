@@ -29,6 +29,7 @@
 
     <bottom>
         <HBox alignment="CENTER" BorderPane.alignment="CENTER" spacing="20">
+            <Button styleClass="menuButton" text="Pause" onAction="#pause" focusTraversable="false"/>
             <Button styleClass="menuButton" text="Back" onAction="#backToMenu" focusTraversable="false"/>
             <padding><Insets top="20" bottom="10"/> </padding>
         </HBox>

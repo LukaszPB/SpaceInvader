@@ -33,6 +33,7 @@ public class GameController {
     private LinkedList<Obstacle> obstacles = new LinkedList<>();
     private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
     private Iterator<Level> levelIterator;
+    private boolean isGamePaused = false;
 
     @FXML
     private void initialize() {
@@ -45,7 +46,17 @@ public class GameController {
         levelIterator = levelsDataBase.iterator();
         loadLevel();
 
+        setupShipMovement();
+
+        setupEnemyTimeline();
+        setupBulletsTimeline();
+
+    }
+    private void setupShipMovement() {
         ship.getGraphicRep().setOnKeyPressed(event -> {
+            if(isGamePaused) {
+                return;
+            }
             switch (event.getCode()) {
                 case LEFT -> ship.move(-10);
                 case RIGHT -> ship.move(10);
@@ -63,8 +74,13 @@ public class GameController {
                 }
             }
         });
+    }
+    private void setupEnemyTimeline() {
         Timeline timelineEnemy = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
+                    if(isGamePaused) {
+                        return;
+                    }
                     Iterator<Enemy> iterator = enemies.iterator();
                     Iterator<Enemy> iteratorTmp = enemies.iterator();
 
@@ -82,14 +98,16 @@ public class GameController {
                 })
         );
 
-
-
-
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
         timelineEnemy.play();
-
+    }
+    private void setupBulletsTimeline() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
+                    if(isGamePaused) {
+                        return;
+                    }
+
                     Iterator<Bullet> iterator = bullets.iterator();
                     Iterator<Enemy> enemyIterator = enemies.iterator();
                     Iterator<Obstacle> obstacleIterator = obstacles.iterator();
@@ -143,7 +161,6 @@ public class GameController {
                 })
         );
 
-
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
@@ -167,7 +184,10 @@ public class GameController {
             anchorPane.getChildren().add(obstacle.getGraphicRep());
         }
     }
-
+    @FXML
+    private void pause() {
+        isGamePaused = !isGamePaused;
+    }
     @FXML
     private void backToMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Views/menuView.fxml"));
