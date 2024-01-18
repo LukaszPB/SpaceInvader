@@ -5,11 +5,12 @@ import com.example.projekt_ztp.Main;
 import com.example.projekt_ztp.Ship;
 import com.example.projekt_ztp.StageProperties;
 import com.example.projekt_ztp.Strategy.Enemy;
-import com.example.projekt_ztp.Strategy.EnemyOne;
-import com.example.projekt_ztp.Strategy.MoveRight;
 import com.example.projekt_ztp.builder.Level;
 import com.example.projekt_ztp.builder.LevelsDataBase;
 import com.example.projekt_ztp.creator.Obstacle;
+import com.example.projekt_ztp.state.AppState;
+import com.example.projekt_ztp.state.GameState;
+import com.example.projekt_ztp.state.PauseState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -34,6 +35,7 @@ public class GameController {
     private LevelsDataBase levelsDataBase = new LevelsDataBase(StageProperties.LEVELS_FILE_PATH);
     private Iterator<Level> levelIterator;
     private boolean isGamePaused = false;
+    private AppState currentState = new PauseState(anchorPane);
 
     @FXML
     private void initialize() {
@@ -46,55 +48,13 @@ public class GameController {
         levelIterator = levelsDataBase.iterator();
         loadLevel();
 
-        setupShipMovement();
-
         setupEnemyTimeline();
         setupBulletsTimeline();
-
-    }
-    private void setupShipMovement() {
-        ship.getGraphicRep().setOnKeyPressed(event -> {
-            if(isGamePaused) {
-                return;
-            }
-            switch (event.getCode()) {
-                case LEFT -> ship.move(-10);
-                case RIGHT -> ship.move(10);
-                case SPACE -> {
-                    bullets.add(ship.shot());
-                    anchorPane.getChildren().add(bullets.get(bullets.size() - 1).getGraphicRep());
-                }
-                case T -> {
-                    System.out.println("NEW ENEMY");
-                    Enemy enemyTmp = new EnemyOne();
-                    System.out.println(enemyTmp.getXandY());
-                    enemyTmp.setStrategy(new MoveRight());
-                    enemies.add(enemyTmp);
-                    anchorPane.getChildren().add(enemies.get(enemies.size()-1).getGraphicRep());
-                }
-            }
-        });
     }
     private void setupEnemyTimeline() {
         Timeline timelineEnemy = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
-                    if(isGamePaused) {
-                        return;
-                    }
-                    Iterator<Enemy> iterator = enemies.iterator();
-                    Iterator<Enemy> iteratorTmp = enemies.iterator();
-
-                    while (iterator.hasNext()) {
-                        Enemy enemy = iterator.next();
-                        if (enemy.move()) {
-
-                            while (iteratorTmp.hasNext()){
-                                Enemy enemy1 = iteratorTmp.next();
-                                enemy1.reverseStrategy();
-                            }
-
-                        }
-                    }
+                    currentState.enemyMove();
                 })
         );
 
@@ -104,60 +64,7 @@ public class GameController {
     private void setupBulletsTimeline() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
-                    if(isGamePaused) {
-                        return;
-                    }
-
-                    Iterator<Bullet> iterator = bullets.iterator();
-                    Iterator<Enemy> enemyIterator = enemies.iterator();
-                    Iterator<Obstacle> obstacleIterator = obstacles.iterator();
-
-
-                    while (obstacleIterator.hasNext()){
-                        Obstacle obstacle = obstacleIterator.next();
-                        //WERYFIKACJA KONCA ZYCIA
-                        if(obstacle.getObstacleHealth() <= 1){
-                            anchorPane.getChildren().remove(obstacle.getGraphicRep());
-                            obstacleIterator.remove();
-                            System.out.println("kill1");
-                        }
-                    }
-                    obstacleIterator = obstacles.iterator();
-
-
-                    while (iterator.hasNext()) {
-                        Bullet bullet = iterator.next();
-
-                        while (obstacleIterator.hasNext()){
-                            //WERYFIKACJA UDEZENIA W SCIANE
-                            Obstacle obstacle = obstacleIterator.next();
-                            if(obstacle.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
-                                System.out.println("SCIANA!");
-                                obstacle.getShot();
-                                anchorPane.getChildren().remove(bullet.getGraphicRep());
-                                iterator.remove();
-                            }
-                        }
-                        obstacleIterator = obstacles.iterator();
-
-
-                        while (enemyIterator.hasNext()){
-                            Enemy enemy = enemyIterator.next();
-                            if(enemy.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
-                                System.out.println("Kolizja!");
-                                anchorPane.getChildren().remove(enemy.getGraphicRep());
-                                enemyIterator.remove();
-                                anchorPane.getChildren().remove(bullet.getGraphicRep());
-                                iterator.remove();
-                            }
-                        }
-                        enemyIterator = enemies.iterator();
-
-                        if (bullet.move()) {
-                            anchorPane.getChildren().remove(bullet.getGraphicRep());
-                            iterator.remove();
-                        }
-                    }
+                    currentState.bulletsMove();
                 })
         );
 
@@ -166,22 +73,8 @@ public class GameController {
     }
 
     private void loadLevel() {
-        enemies.clear();
-
-        if(!levelIterator.hasNext()) {
-
-            return;
-        }
-        Level level = levelIterator.next();
-
-        for(Enemy enemy : level.getEnemies()) {
-            enemy.setStrategy(new MoveRight());
-            enemies.add(enemy);
-            anchorPane.getChildren().add(enemy.getGraphicRep());
-        }
-        for(Obstacle obstacle : level.getObstacles()) {
-            obstacles.add(obstacle);
-            anchorPane.getChildren().add(obstacle.getGraphicRep());
+        if(levelIterator.hasNext()) {
+            currentState = new GameState(anchorPane,levelIterator.next());
         }
     }
     @FXML
