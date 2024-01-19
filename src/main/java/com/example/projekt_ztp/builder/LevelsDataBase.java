@@ -47,15 +47,22 @@ public class LevelsDataBase {
     public Iterator<Level> iterator() {
         return new LevelIterator();
     }
+    public int getDifficulty() { return difficulty; }
     private class LevelIterator implements java.util.Iterator<Level> {
         private int idx=-1;
         public Level next() {
-            idx+=difficulty;
+            if(idx+difficulty>levelDescriptions.size()) {
+                idx = levelDescriptions.size()-1;
+            }
+            else {
+                idx+=difficulty;
+            }
             return buildLevel(builders[theme].copy(),levelDescriptions.get(idx));
         }
         @Override
         public boolean hasNext() {
-            return idx+difficulty<levelDescriptions.size();
+            //return idx+difficulty<levelDescriptions.size();
+            return true;
         }
     }
 }

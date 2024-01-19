@@ -90,12 +90,12 @@ public class GameController{
     private void loadLevel() {
         if(levelIterator.hasNext()) {
             gameState = new GameState(anchorPane,levelIterator.next(),observer);
-            observer.notify(new NewLevel(100 * levelCounter.getLevelNumber()));
             currentState = gameState;
         }
     }
     private void victory() {
         if(levelIterator.hasNext()){
+            observer.notify(new NewLevel(levelsDataBase.getDifficulty()+levelCounter.getLevelNumber()));
             currentState = new ChoosingUpgradeState(anchorPane);
         }else {
             totalVictory();
@@ -117,6 +117,9 @@ public class GameController{
     }
     @FXML
     private void pause() {
+        if(currentState instanceof  ChoosingUpgradeState) {
+            return;
+        }
         if(currentState instanceof PauseState) {
             gameState.setupShipMove();
             currentState = gameState;

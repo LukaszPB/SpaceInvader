@@ -11,8 +11,8 @@
 }
 .ship {
     -fx-border-width: 0px; /* Grubość obramowania */
-    -fx-border-color: black;
-    -fx-background-color: black /* Kolor tła */
+    -fx-border-color: transparent;
+    -fx-background-color: transparent /* Kolor tła */
 }
 .bullet {
     -fx-fill: #e6e6e6;

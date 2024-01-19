@@ -5,8 +5,7 @@ public class LevelCounter implements Observer{
     @Override
     public void update(Event event) {
         if(event instanceof NewLevel) {
-            level++;
-            System.out.println("Level " + level);
+            level = event.getData();
         }
     }
     public int getLevelNumber() { return level; }

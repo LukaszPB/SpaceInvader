@@ -23,7 +23,7 @@
             <HBox alignment="CENTER" BorderPane.alignment="CENTER" spacing="20">
                 <Button fx:id="easyButton" styleClass="menuButton" text="Easy" onAction="#easy"/>
                 <Button fx:id="normalButton" styleClass="menuButton" text="Normal" onAction="#normal"/>
-                <Button fx:id="hardButton" styleClass="menuButton" text="hard" onAction="#hard"/>
+                <Button fx:id="hardButton" styleClass="menuButton" text="Hard" onAction="#hard"/>
             </HBox>
 
             <Label text="Theme" styleClass="message"/>
