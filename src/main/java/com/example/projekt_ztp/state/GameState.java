@@ -76,6 +76,7 @@ public class GameState extends AppState{
 
     @Override
     public void bulletsMove() {
+        boolean enemyHit = false;
         Iterator<Bullet> iterator = bullets.iterator();
         Iterator<Enemy> enemyIterator = enemies.iterator();
         Iterator<Obstacle> obstacleIterator = obstacles.iterator();
@@ -95,7 +96,7 @@ public class GameState extends AppState{
 
         while (iterator.hasNext()) {
             Bullet bullet = iterator.next();
-
+            boolean buletDestroyed = false;
             while (obstacleIterator.hasNext()){
                 //WERYFIKACJA UDEZENIA W SCIANE
                 Obstacle obstacle = obstacleIterator.next();
@@ -115,12 +116,27 @@ public class GameState extends AppState{
                     System.out.println("Kolizja!");
                     pane.getChildren().remove(enemy.getGraphicRep());
                     enemyIterator.remove();
-                    pane.getChildren().remove(bullet.getGraphicRep());
-                    iterator.remove();
+                    enemyHit = true;
+//                    pane.getChildren().remove(bullet.getGraphicRep());
+//                    iterator.remove();
+//                    if(iterator.hasNext()){
+//                        bullet = iterator.next();
+//                    }else {
+//                        break;
+//                    }
+                }
+            }
+            if(enemyHit){
+                pane.getChildren().remove(bullet.getGraphicRep());
+                iterator.remove();
+                enemyHit = false;
+                if(iterator.hasNext()){
+                    bullet = iterator.next();
+                }else {
+                    break;
                 }
             }
             enemyIterator = enemies.iterator();
-
             if (bullet.move()) {
                 pane.getChildren().remove(bullet.getGraphicRep());
                 iterator.remove();

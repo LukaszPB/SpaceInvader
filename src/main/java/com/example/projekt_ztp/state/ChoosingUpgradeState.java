@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class ChoosingUpgradeState extends AppState{
 
-    private boolean upgradeChosen = false;
+    public boolean upgradeChosen = false;
     private ModuleToShot[] modules = {
             new ModuleToShot(new StrongerEngines(null),100,200),
             new ModuleToShot(new FasterBullet(null),200,200),
@@ -56,8 +56,14 @@ public class ChoosingUpgradeState extends AppState{
             Bullet bullet = iterator.next();
             for(ModuleToShot module : modules) {
                 if(module.wasHit(bullet)) {
-                    ship.addUpgrade(module.getModule());
+                    System.out.println("DODANIE UPGREADE");
+                    if(!upgradeChosen){
+                        ship.addUpgrade(module.getModule());
+                    }else {
+                        System.out.println("Ship.upgrade == module.getModule() [NIE DODAJE UPGREADA]");
+                    }
                     upgradeChosen = true;
+                    break;
                 }
             }
             if (bullet.move()) {
@@ -67,11 +73,14 @@ public class ChoosingUpgradeState extends AppState{
         }
     }
     public void deleteAll() {
-        for(Bullet bullet : bullets) {
-            pane.getChildren().remove(bullet.getGraphicRep());
-        }
         for(ModuleToShot module : modules) {
             pane.getChildren().remove(module.getGraphicRep());
         }
+
+        for(Bullet bullet : bullets) {
+            pane.getChildren().remove(bullet.getGraphicRep());
+        }
+
+        upgradeChosen = false;
     }
 }

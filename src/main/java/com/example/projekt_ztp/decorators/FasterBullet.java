@@ -16,7 +16,7 @@ public class FasterBullet extends Module{
 
     @Override
     public Bullet shot(Bullet bullet) {
-        bullet.setSpeed(2*bullet.getSpeed());
+        bullet.setSpeed(0.5+bullet.getSpeed());
         return upgrade.shot(bullet);
     }
 }

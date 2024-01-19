@@ -1,10 +1,14 @@
 package com.example.projekt_ztp.Strategy;
 
 import com.example.projekt_ztp.StageProperties;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
 public class EnemyOne extends Enemy{
 
     public EnemyOne(){
+        image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyOne.png");
+        imagePattern = new ImagePattern(image);
         this.health = 100;
         //this.image = TODO:WCZYTUJEMY ZDJECIE
         //Pozycjonowanie do zmiany
@@ -16,6 +20,8 @@ public class EnemyOne extends Enemy{
     }
 
     public EnemyOne(double xPos,double yPos){
+        image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyOne.png");
+        imagePattern = new ImagePattern(image);
         this.health = 100;
         //this.image = TODO:WCZYTUJEMY ZDJECIE
         this.xPos = xPos;

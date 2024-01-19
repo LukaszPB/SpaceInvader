@@ -30,6 +30,8 @@ public class Bullet {
 
     public void setSize(double size) {
         this.size = size;
+        graphicRep.setWidth(size);
+        graphicRep.setHeight(size);
     }
 
     public void setSpeed(double speed) {

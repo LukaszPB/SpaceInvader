@@ -5,7 +5,8 @@ import javafx.scene.layout.Pane;
 
 public abstract class AppState {
     protected Pane pane;
-    protected Ship ship = Ship.getInstance();
+    public Ship ship = Ship.getInstance();
+    public boolean upgradeChosen = false;
     public AppState(Pane pane) {
         this.pane = pane;
         setupShipMove();
