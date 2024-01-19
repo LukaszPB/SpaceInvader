@@ -61,4 +61,8 @@ public class BuilderTwo implements BoardBuilder{
         level = new Level();
         return finalLevel;
     }
+    @Override
+    public BoardBuilder copy() {
+        return new BuilderTwo();
+    }
 }

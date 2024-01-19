@@ -55,6 +55,11 @@ public class BuilderOne implements BoardBuilder{
     }
 
     @Override
+    public BoardBuilder copy() {
+        return new BuilderOne();
+    }
+
+    @Override
     public Level getLevel() {
         Level finalLevel = level;
         level = new Level();

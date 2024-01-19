@@ -7,6 +7,8 @@ import com.example.projekt_ztp.Strategy.EnemyOne;
 import com.example.projekt_ztp.Strategy.MoveRight;
 import com.example.projekt_ztp.builder.Level;
 import com.example.projekt_ztp.creator.Obstacle;
+import com.example.projekt_ztp.observer.EnemyEliminated;
+import com.example.projekt_ztp.observer.GameObserver;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -17,11 +19,14 @@ public class GameState extends AppState{
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Obstacle> obstacles = new LinkedList<>();
+    private GameObserver observer;
+
     public GameState(Pane pane) {
         super(pane);
     }
-    public GameState(Pane pane, Level level) {
+    public GameState(Pane pane, Level level, GameObserver observer) {
         this(pane);
+        this.observer = observer;
         for(Enemy enemy : level.getEnemies()) {
             enemy.setStrategy(new MoveRight());
             enemies.add(enemy);
@@ -114,6 +119,7 @@ public class GameState extends AppState{
                 Enemy enemy = enemyIterator.next();
                 if(enemy.getGraphicRep().getBoundsInParent().intersects(bullet.getGraphicRep().getBoundsInParent())){
                     System.out.println("Kolizja!");
+                    observer.notify(new EnemyEliminated(enemy.getScore()));
                     pane.getChildren().remove(enemy.getGraphicRep());
                     enemyIterator.remove();
                     enemyHit = true;

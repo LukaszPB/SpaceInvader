@@ -16,6 +16,7 @@ public abstract class Enemy {
     protected MoveLeft moveLeft = new MoveLeft();
     protected MoveRight moveRight = new MoveRight();
     protected ImagePattern imagePattern = new ImagePattern(image);
+    protected int score = 0;
 
     public void reverseStrategy(){
         yPos += StageProperties.ENEMY_HEIGHT;
@@ -95,4 +96,5 @@ public abstract class Enemy {
     public double getyPos() {
         return yPos;
     }
+    public int getScore() { return score; }
 }

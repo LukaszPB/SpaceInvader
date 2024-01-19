@@ -17,11 +17,12 @@ public class Ship {
         graphicRep.setMinSize(StageProperties.SHIP_SIZE,StageProperties.SHIP_SIZE);
         graphicRep.setMaxSize(StageProperties.SHIP_SIZE,StageProperties.SHIP_SIZE);
 
-        Image shipImage = new Image("file:src/main/resources/com/example/projekt_ztp/Images/ship.png");
+        Image shipImage = new Image("file:src/main/resources/com/example/projekt_ztp/Images/ship1.png");
         String shipStyle = "-fx-background-image: url('" + shipImage.getUrl() + "'); " +
                 "-fx-background-size: cover;";
 
         graphicRep.setStyle(shipStyle);
+        graphicRep.getStyleClass().add("ship");
 
         graphicRep.setLayoutX(x);
         graphicRep.setLayoutY(y);

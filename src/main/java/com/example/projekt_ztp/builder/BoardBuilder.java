@@ -6,5 +6,6 @@ public interface BoardBuilder {
     void addObstacle();
     void nexColumn();
     void nexLine();
+    BoardBuilder copy();
     Level getLevel();
 }

@@ -5,6 +5,10 @@ import com.example.projekt_ztp.Ship;
 import com.example.projekt_ztp.StageProperties;
 import com.example.projekt_ztp.builder.Level;
 import com.example.projekt_ztp.builder.LevelsDataBase;
+import com.example.projekt_ztp.observer.GameObserver;
+import com.example.projekt_ztp.observer.LevelCounter;
+import com.example.projekt_ztp.observer.NewLevel;
+import com.example.projekt_ztp.observer.Score;
 import com.example.projekt_ztp.state.AppState;
 import com.example.projekt_ztp.state.ChoosingUpgradeState;
 import com.example.projekt_ztp.state.GameState;
@@ -23,7 +27,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Iterator;
 
-public class GameController {
+public class GameController{
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -34,6 +38,9 @@ public class GameController {
     private Iterator<Level> levelIterator;
     private GameState gameState;
     private AppState currentState = new PauseState(anchorPane);
+    private GameObserver observer = new GameObserver();
+    private Score score = new Score();
+    private LevelCounter levelCounter = new LevelCounter();
 
     @FXML
     private void initialize() {
@@ -45,6 +52,11 @@ public class GameController {
         message.setLayoutY(StageProperties.GAME_WINDOW_HEIGHT/3);
 
         anchorPane.getChildren().add(Ship.getInstance().getGraphicRep());
+
+        anchorPane.getChildren().add(score.getLabel());
+
+        observer.addObserver(levelCounter);
+        observer.addObserver(score);
 
         levelIterator = levelsDataBase.iterator();
         loadLevel();
@@ -77,7 +89,8 @@ public class GameController {
 
     private void loadLevel() {
         if(levelIterator.hasNext()) {
-            gameState = new GameState(anchorPane,levelIterator.next());
+            gameState = new GameState(anchorPane,levelIterator.next(),observer);
+            observer.notify(new NewLevel(100 * levelCounter.getLevelNumber()));
             currentState = gameState;
         }
     }

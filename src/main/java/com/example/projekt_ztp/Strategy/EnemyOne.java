@@ -9,6 +9,8 @@ public class EnemyOne extends Enemy{
     public EnemyOne(){
         image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyOne.png");
         imagePattern = new ImagePattern(image);
+
+        score = 10;
         this.health = 100;
         //this.image = TODO:WCZYTUJEMY ZDJECIE
         //Pozycjonowanie do zmiany
@@ -22,6 +24,8 @@ public class EnemyOne extends Enemy{
     public EnemyOne(double xPos,double yPos){
         image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyOne.png");
         imagePattern = new ImagePattern(image);
+
+        score = 10;
         this.health = 100;
         //this.image = TODO:WCZYTUJEMY ZDJECIE
         this.xPos = xPos;

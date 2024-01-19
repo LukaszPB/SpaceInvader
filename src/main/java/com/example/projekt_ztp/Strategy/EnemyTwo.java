@@ -9,6 +9,8 @@ public class EnemyTwo extends Enemy{
     public EnemyTwo(double xPos,double yPos){
         image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyTwo.png");
         imagePattern = new ImagePattern(image);
+
+        score = 20;
         this.health = 100;
         //this.image = TODO:WCZYTUJEMY ZDJECIE
         this.xPos = xPos;
