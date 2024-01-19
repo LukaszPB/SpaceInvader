@@ -51,7 +51,7 @@ public class LevelsDataBase {
         private int idx=-1;
         public Level next() {
             idx+=difficulty;
-            return buildLevel(new BuilderOne(),levelDescriptions.get(idx));
+            return buildLevel(builders[theme],levelDescriptions.get(idx));
         }
         @Override
         public boolean hasNext() {

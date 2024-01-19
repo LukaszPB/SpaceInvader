@@ -15,7 +15,7 @@ public class BiggerBullet extends Module{
 
     @Override
     public Bullet shot(Bullet bullet) {
-        bullet.setSize(2*bullet.getSize());
+        bullet.setSize(1+bullet.getSize());
         return upgrade.shot(bullet);
     }
 }

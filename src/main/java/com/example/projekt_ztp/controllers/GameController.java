@@ -48,9 +48,8 @@ public class GameController {
 
         levelIterator = levelsDataBase.iterator();
         loadLevel();
-
+        Ship.getInstance().resetUpgrade();
         setupEnemyTimeline();
-        setupBulletsTimeline();
     }
     private void setupEnemyTimeline() {
         Timeline timelineEnemy = new Timeline(
@@ -61,25 +60,20 @@ public class GameController {
                         case 1-> defeat();
                     }
                 })
+                ,
+                new KeyFrame(Duration.millis(10), event -> {
+
+                    //if(!currentState.upgradeChosen){
+                        currentState.bulletsMove();
+                    //}
+
+                })
         );
 
         timelineEnemy.setCycleCount(Timeline.INDEFINITE);
         timelineEnemy.play();
     }
-    private void setupBulletsTimeline() {
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.millis(10), event -> {
 
-                    if(!currentState.upgradeChosen){
-                        currentState.bulletsMove();
-                    }
-
-                })
-        );
-
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
 
     private void loadLevel() {
         if(levelIterator.hasNext()) {
@@ -96,10 +90,14 @@ public class GameController {
     }
     private void totalVictory(){
         message.setText("Total Victory!");
+        message.setLayoutX(200);
+        message.setLayoutY(150);
         currentState = new PauseState(anchorPane);
     }
     private void defeat() {
         message.setText("Defeat");
+        message.setLayoutX(230);
+        message.setLayoutY(150);
         gameState.deleteAll();
         gameState.ship.resetUpgrade();
         currentState = new PauseState(anchorPane);

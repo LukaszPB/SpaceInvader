@@ -43,7 +43,7 @@ public class Ship {
         graphicRep.setLayoutY(y);
     }
     public void move(int shift) {
-        if(x+shift < 10 || x+shift > StageProperties.GAME_WINDOW_WIDTH-StageProperties.SHIP_SIZE-10) {
+        if(x+shift < 0 || x+shift > StageProperties.GAME_WINDOW_WIDTH-StageProperties.SHIP_SIZE-0) {
             return;
         }
         x += upgrade.move(shift);

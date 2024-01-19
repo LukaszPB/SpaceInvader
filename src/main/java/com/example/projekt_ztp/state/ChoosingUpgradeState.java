@@ -57,7 +57,7 @@ public class ChoosingUpgradeState extends AppState{
             for(ModuleToShot module : modules) {
                 if(module.wasHit(bullet)) {
                     System.out.println("DODANIE UPGREADE");
-                    if(ship.upgrade != module.getModule()){
+                    if(!upgradeChosen){
                         ship.addUpgrade(module.getModule());
                     }else {
                         System.out.println("Ship.upgrade == module.getModule() [NIE DODAJE UPGREADA]");
