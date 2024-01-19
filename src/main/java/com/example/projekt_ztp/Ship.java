@@ -10,7 +10,7 @@ public class Ship {
     private static final Ship instance = new Ship();
     private double x=(StageProperties.GAME_WINDOW_WIDTH-StageProperties.SHIP_SIZE)/2;
     private double y=StageProperties.GAME_WINDOW_HEIGHT-1.5*StageProperties.SHIP_SIZE;
-    private Upgrade upgrade = new BasicModule();
+    public Upgrade upgrade = new BasicModule();
     private Button graphicRep;
     private Ship() {
         graphicRep = new Button();
@@ -27,6 +27,11 @@ public class Ship {
         graphicRep.setLayoutY(y);
     }
     public static Ship getInstance() { return instance; }
+
+    public void resetUpgrade(){
+        upgrade = new BasicModule();
+    }
+
     public void addUpgrade(Module module) {
         module.setUpgrade(upgrade);
         upgrade = module;

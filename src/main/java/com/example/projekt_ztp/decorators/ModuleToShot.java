@@ -8,6 +8,7 @@ public class ModuleToShot {
     private Module module;
     private int x,y;
     private Rectangle graphicRep;
+    private boolean badziewie;
     public ModuleToShot(Module module,int x,int y) {
         this.module = module;
         this.x = x;
@@ -22,6 +23,7 @@ public class ModuleToShot {
     }
 
     public Module getModule() {
+        System.out.println("getModule ->" + module);
         return module;
     }
 

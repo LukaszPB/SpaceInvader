@@ -16,5 +16,6 @@ public abstract class Module implements Upgrade {
     public Color getGraphicRep() { return graphicRep; }
     public void setUpgrade(Upgrade upgrade) {
         this.upgrade = upgrade;
+        System.out.println("Dodany upgrade ->" + upgrade);
     }
 }

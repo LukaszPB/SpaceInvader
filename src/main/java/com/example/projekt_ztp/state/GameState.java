@@ -95,7 +95,7 @@ public class GameState extends AppState{
 
         while (iterator.hasNext()) {
             Bullet bullet = iterator.next();
-
+            boolean buletDestroyed = false;
             while (obstacleIterator.hasNext()){
                 //WERYFIKACJA UDEZENIA W SCIANE
                 Obstacle obstacle = obstacleIterator.next();
@@ -117,10 +117,14 @@ public class GameState extends AppState{
                     enemyIterator.remove();
                     pane.getChildren().remove(bullet.getGraphicRep());
                     iterator.remove();
+                    if(iterator.hasNext()){
+                        bullet = iterator.next();
+                    }else {
+                        break;
+                    }
                 }
             }
             enemyIterator = enemies.iterator();
-
             if (bullet.move()) {
                 pane.getChildren().remove(bullet.getGraphicRep());
                 iterator.remove();

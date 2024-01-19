@@ -69,7 +69,11 @@ public class GameController {
     private void setupBulletsTimeline() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
-                    currentState.bulletsMove();
+
+                    if(!currentState.upgradeChosen){
+                        currentState.bulletsMove();
+                    }
+
                 })
         );
 
@@ -84,11 +88,20 @@ public class GameController {
         }
     }
     private void victory() {
-        currentState = new ChoosingUpgradeState(anchorPane);
+        if(levelIterator.hasNext()){
+            currentState = new ChoosingUpgradeState(anchorPane);
+        }else {
+            totalVictory();
+        }
+    }
+    private void totalVictory(){
+        message.setText("Total Victory!");
+        currentState = new PauseState(anchorPane);
     }
     private void defeat() {
         message.setText("Defeat");
         gameState.deleteAll();
+        gameState.ship.resetUpgrade();
         currentState = new PauseState(anchorPane);
     }
     @FXML
@@ -108,6 +121,8 @@ public class GameController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Views/gameView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), StageProperties.STAGE_WIDTH, StageProperties.STAGE_HEIGHT);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
+        gameState.ship.resetUpgrade();
+        //currentState = new PauseState(anchorPane);
         stage.setScene(scene);
     }
     @FXML

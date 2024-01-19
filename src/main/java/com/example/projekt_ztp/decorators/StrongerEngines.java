@@ -11,7 +11,8 @@ public class StrongerEngines extends Module{
 
     @Override
     public double move(double x) {
-        return upgrade.move(2*x);
+        double tmp = x * 2;
+        return upgrade.move(tmp);
     }
 
     @Override
