@@ -2,8 +2,8 @@ package com.example.projekt_ztp.builder;
 
 import com.example.projekt_ztp.StageProperties;
 import com.example.projekt_ztp.Strategy.Enemy;
-import com.example.projekt_ztp.Strategy.EnemyOne;
-import com.example.projekt_ztp.Strategy.EnemyTwo;
+import com.example.projekt_ztp.Strategy.EnemyFour;
+import com.example.projekt_ztp.Strategy.EnemyThree;
 import com.example.projekt_ztp.creator.CreateObstacleTwo;
 import com.example.projekt_ztp.creator.Creator;
 import com.example.projekt_ztp.creator.Obstacle;
@@ -23,14 +23,14 @@ public class BuilderTwo implements BoardBuilder{
 
     @Override
     public void addEnemy1() {
-        Enemy enemy = new EnemyOne(x,y);
+        Enemy enemy = new EnemyThree(x,y);
         x += StageProperties.ENEMY_WIDTH;
         level.addEnemy(enemy);
     }
 
     @Override
     public void addEnemy2() {
-        Enemy enemy = new EnemyTwo(x,y);
+        Enemy enemy = new EnemyFour(x,y);
         x += StageProperties.ENEMY_WIDTH;
         level.addEnemy(enemy);
     }

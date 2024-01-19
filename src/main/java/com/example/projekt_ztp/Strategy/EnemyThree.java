@@ -3,14 +3,13 @@ package com.example.projekt_ztp.Strategy;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
-public class EnemyTwo extends Enemy{
-
-    public EnemyTwo(double xPos,double yPos){
+public class EnemyThree extends Enemy{
+    public EnemyThree(double xPos,double yPos){
         super(xPos, yPos);
-        image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyTwo.png");
+        image = new Image("file:src/main/resources/com/example/projekt_ztp/Images/EnemyThree.png");
         imagePattern = new ImagePattern(image);
 
-        score = 20;
+        score = 10;
         initBorder();
     }
 }

@@ -17,6 +17,14 @@ public abstract class Enemy {
     protected MoveRight moveRight = new MoveRight();
     protected ImagePattern imagePattern = new ImagePattern(image);
     protected int score = 0;
+    public Enemy(double xPos,double yPos){
+        this.health = 100;
+        //this.image = TODO:WCZYTUJEMY ZDJECIE
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.enemyWidth = StageProperties.ENEMY_WIDTH;
+        this.enemyHeight = StageProperties.ENEMY_HEIGHT;
+    }
 
     public void reverseStrategy(){
         yPos += StageProperties.ENEMY_HEIGHT;
