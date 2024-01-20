@@ -37,7 +37,7 @@ public class SettingsController {
 //            Scanner scannerSettings = new Scanner(new File(StageProperties.SETTINGS_FILE_PATH));
 //            difficulty = Integer.parseInt(scannerSettings.next());
 //            theme = Integer.parseInt(scannerSettings.next());
-//            scannerSettings.close();
+//            scannerSettings.close();//
             loadSettings();
 //        }
 //        catch (IOException e) {

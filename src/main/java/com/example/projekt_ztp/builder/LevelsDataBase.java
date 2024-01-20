@@ -29,7 +29,7 @@ public class LevelsDataBase {
             System.err.println("Nie można odnaleźć pliku z poziomami: com/example/projekt_ztp/files/levels");
         }
 
-        // Analogicznie pobierz InputStream dla pliku ustawień
+        // Analogicznie pobierz InputStream dla pliku ustawień//
         InputStream settingsInputStream = classLoader.getResourceAsStream("com/example/projekt_ztp/files/settings");
         if (settingsInputStream != null) {
             Scanner scannerSettings = new Scanner(settingsInputStream);

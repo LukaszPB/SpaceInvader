@@ -16,7 +16,7 @@ public class StageProperties {
     //  /com/example/projekt_ztp/files/settings
     //  "src/main/resources/com/example/projekt_ztp/files/settings"
 
-    // OSTATNIE /com/example/projekt_ztp/files/settings
+    // OSTATNIE /com/example/projekt_ztp/files/settings/
     public static String SETTINGS_FILE_PATH = "src/main/resources/com/example/projekt_ztp/files/settings";
     public static String LEVELS_FILE_PATH = "src/main/resources/com/example/projekt_ztp/files/levels";
 }

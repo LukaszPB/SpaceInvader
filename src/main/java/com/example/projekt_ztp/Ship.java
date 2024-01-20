@@ -17,7 +17,7 @@ public class Ship {
         graphicRep.setMinSize(StageProperties.SHIP_SIZE,StageProperties.SHIP_SIZE);
         graphicRep.setMaxSize(StageProperties.SHIP_SIZE,StageProperties.SHIP_SIZE);
 
-        //Image shipImage = new Image("file:src/main/resources/com/example/projekt_ztp/Images/ship1.png");
+        //Image shipImage = new Image("file:src/main/resources/com/example/projekt_ztp/Images/ship1.png");/
 
         Image shipImage = new Image(getClass().getResource("/com/example/projekt_ztp/Images/ship1.png").toExternalForm());
 
