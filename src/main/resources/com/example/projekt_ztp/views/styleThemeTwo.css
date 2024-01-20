@@ -1,0 +1,47 @@
+.title {
+    -fx-text-fill: #0077b3;
+    -fx-font-family: "Impact";
+    -fx-font-size: 50;
+    -fx-label-padding: 10;
+}
+.message {
+    -fx-text-fill: #0077b3;
+    -fx-font-family: "Impact";
+    -fx-font-size: 30;
+}
+.ship {
+    -fx-border-width: 0px; /* Grubość obramowania */
+    -fx-border-color: transparent;
+    -fx-background-color: transparent /* Kolor tła */
+}
+.bullet {
+    -fx-fill: #0077b3;
+}
+.menuButton {
+    -fx-background-color: #80d4ff; /* Kolor tła */
+    -fx-text-fill: #0077b3; /* Kolor tekstu */
+    -fx-font-size: 18px; /* Rozmiar czcionki */
+    -fx-font-weight: bold; /* Pogrubienie tekstu */
+    -fx-border-color: #0077b3; /* Kolor obramowania */
+    -fx-border-width: 5px; /* Grubość obramowania */
+    -fx-max-height: 30px;
+    -fx-max-width: 140px;
+}
+.selectedButton {
+    -fx-background-color: #b3e6ff; /* Kolor tła */
+}
+.menuButton:hover {
+    -fx-background-color:#66ccff; /* Kolor tła po najechaniu myszą */
+}
+.selectedButton:hover {
+    -fx-background-color:#99ddff; /* Kolor tła po najechaniu myszą */
+}
+.menuButton:pressed {
+    -fx-background-color: #99ddff; /* Kolor tła po naciśnięciu */
+}
+.background {
+    -fx-border-color: #0077b3; /* Kolor ramki (zielony) */
+    -fx-border-width: 10px; /* Grubość ramki */
+    -fx-padding: 10px; /* Odstęp wewnątrz BorderPane */
+    -fx-background-color: #80d4ff;
+}
